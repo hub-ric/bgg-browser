@@ -1,0 +1,26 @@
+# Java
+backend/target/
+*.class
+*.jar
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Env
+.env
+*.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local dev config (contains DB credentials)
+backend/src/main/resources/application-dev.properties
+
+# Worktrees
+.worktrees/
+
+# Superpowers
+.superpowers/
