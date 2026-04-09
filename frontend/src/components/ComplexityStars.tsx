@@ -4,18 +4,14 @@ interface Props {
 
 export function ComplexityStars({ complexity }: Props) {
   if (complexity == null) return null
-
   const filled = Math.round(complexity)
-  const empty = 5 - filled
-
   return (
-    <div className="flex gap-1">
-      {Array.from({ length: filled }, (_, i) => (
-        <span key={`filled-${i}`} data-testid="star-filled">★</span>
-      ))}
-      {Array.from({ length: empty }, (_, i) => (
-        <span key={`empty-${i}`} data-testid="star-empty">☆</span>
-      ))}
-    </div>
+    <span className="flex gap-0.5" title={`Complexity: ${complexity.toFixed(1)} / 5`}>
+      {Array.from({ length: 5 }, (_, i) =>
+        i < filled
+          ? <span key={i} data-testid="star-filled" className="text-amber-400">★</span>
+          : <span key={i} data-testid="star-empty" className="text-gray-600">★</span>
+      )}
+    </span>
   )
 }

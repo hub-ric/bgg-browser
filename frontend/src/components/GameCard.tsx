@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import type { GameSummary } from '../types/game'
+import { ComplexityStars } from './ComplexityStars'
 
 interface Props {
   game: GameSummary
@@ -6,27 +8,36 @@ interface Props {
 
 export function GameCard({ game }: Props) {
   return (
-    <div className="flex gap-4 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-      {game.thumbnailUrl && (
+    <Link
+      to={`/games/${game.id}`}
+      className="flex gap-3 p-3 rounded-lg bg-white hover:bg-gray-50 border border-gray-200 transition-colors"
+    >
+      {game.thumbnailUrl ? (
         <img
           src={game.thumbnailUrl}
           alt={game.name}
-          className="w-16 h-20 object-cover rounded"
+          className="w-14 h-14 object-cover rounded flex-shrink-0"
         />
+      ) : (
+        <div className="w-14 h-14 bg-gray-200 rounded flex-shrink-0" />
       )}
-      <div className="flex-1 flex flex-col justify-between">
-        <div>
-          <h3 className="font-semibold text-sm">{game.name}</h3>
-          {game.yearPublished && (
-            <p className="text-xs text-gray-500">Published {game.yearPublished}</p>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-semibold text-gray-900 truncate">{game.name}</h3>
+          {game.bggRank != null && (
+            <span className="text-xs text-gray-500 flex-shrink-0">#{game.bggRank}</span>
           )}
         </div>
-        <div className="flex gap-4 text-xs text-gray-600">
-          {game.bggRank && <span>Rank: #{game.bggRank}</span>}
-          {game.avgRating != null && <span>Rating: {game.avgRating.toFixed(1)}</span>}
-          {game.complexity != null && <span>Complexity: {game.complexity.toFixed(1)}</span>}
+        <div className="flex items-center gap-3 mt-1 text-sm text-gray-600">
+          {game.avgRating != null && (
+            <span className="text-green-600 font-medium">⭐ {game.avgRating.toFixed(1)}</span>
+          )}
+          <ComplexityStars complexity={game.complexity} />
+          {game.minPlayers != null && game.maxPlayers != null && (
+            <span>{game.minPlayers}–{game.maxPlayers}p</span>
+          )}
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
